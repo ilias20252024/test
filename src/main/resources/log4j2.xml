@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- VULNERABLE: Configuración de Log4j2 vulnerable a Log4Shell -->
+<Configuration status="WARN">
+    
+    <!-- VULNERABLE: Lookups habilitados globalmente -->
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</Property>
+        <Property name="LOG_LEVEL">INFO</Property>
+        <!-- VULNERABLE: Variables que pueden ser explotadas -->
+        <Property name="APP_NAME">WSP2-SecDevOps</Property>
+        <Property name="LOG_DIR">${sys:java.io.tmpdir}/logs</Property>
+    </Properties>
+    
+    <Appenders>
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        
+        <!-- VULNERABLE: File Appender con path controlable -->
+        <File name="FileAppender" fileName="${LOG_DIR}/wsp2.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </File>
+        
+        <!-- VULNERABLE: RollingFile con configuración insegura -->
+        <RollingFile name="RollingFileAppender" 
+                     fileName="${LOG_DIR}/wsp2-rolling.log"
+                     filePattern="${LOG_DIR}/wsp2-rolling-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    
+    <Loggers>
+        <!-- VULNERABLE: Logger específico para servlets con nivel DEBUG -->
+        <Logger name="com.secdevops.wsp2" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+        
+        <!-- VULNERABLE: Logger para SQL queries -->
+        <Logger name="SQL" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
+        </Logger>
+        
+        <!-- VULNERABLE: Logger para información sensible -->
+        <Logger name="SECURITY" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
+        </Logger>
+        
+        <!-- Root Logger -->
+        <Root level="${LOG_LEVEL}">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
+        </Root>
+    </Loggers>
+    
+</Configuration> 
