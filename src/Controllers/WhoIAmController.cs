@@ -3,6 +3,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+using System.Text;
+using System.IO;
+using System.Data.SqlClient;
 
 namespace WSP2.Controllers
 {
@@ -126,6 +129,40 @@ namespace WSP2.Controllers
             }
 
             return false;
+        }
+
+        [HttpPost]
+        public IActionResult ExecuteCommand(string command)
+        {
+            // VULNERABLE: Command Injection
+            var process = new System.Diagnostics.Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.Arguments = $"/c {command}";
+            process.Start();
+            return Ok("Comando ejecutado");
+        }
+
+        [HttpGet]
+        public IActionResult ViewLogs()
+        {
+            // VULNERABLE: Exposición de logs
+            var logPath = "/var/log/app.log";
+            var logs = System.IO.File.ReadAllText(logPath);
+            return Content(logs, "text/plain");
+        }
+
+        [HttpGet]
+        public IActionResult AccessDatabase()
+        {
+            // VULNERABLE: Acceso directo a base de datos
+            using (var connection = new SqlConnection(DB_URL))
+            {
+                connection.Open();
+                var command = new SqlCommand("SELECT * FROM users", connection);
+                var reader = command.ExecuteReader();
+                // Procesar resultados...
+            }
+            return Ok("Acceso a base de datos realizado");
         }
     }
 } 
