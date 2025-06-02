@@ -2,7 +2,7 @@
 
 ## 📖 Descripción
 
-**WSP2** es una aplicación web Java/JSP diseñada específicamente para **propósitos educativos** en **SecDevOps** y **seguridad de aplicaciones**. Esta aplicación contiene múltiples vulnerabilidades conocidas implementadas intencionalmente para demostrar conceptos de seguridad y técnicas de testing.
+**WSP2** es una aplicación web .NET diseñada específicamente para **propósitos educativos** en **SecDevOps** y **seguridad de aplicaciones**. Esta aplicación contiene múltiples vulnerabilidades conocidas implementadas intencionalmente para demostrar conceptos de seguridad y técnicas de testing.
 
 > ⚠️ **ADVERTENCIA**: Esta aplicación es **DELIBERADAMENTE VULNERABLE** y **NUNCA** debe ser desplegada en un entorno de producción.
 
