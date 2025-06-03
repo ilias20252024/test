@@ -1,0 +1,64 @@
+@{
+    ViewData["Title"] = "Who I Am - WSP2 SecDevOps";
+}
+
+<div class="container">
+    <h1>👤 Who I Am - Sistema de Autenticación</h1>
+    <div class="warning">⚠️ VULNERABILIDADES: SQL Injection, Weak Auth, Session Issues</div>
+
+    <form method="post" action="@Url.Action("Login")" class="login-form">
+        <h2>🔐 Iniciar Sesión</h2>
+
+        <div class="form-group">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="domain">Dominio (opcional):</label>
+            <input type="text" id="domain" name="domain" placeholder="LDAP domain">
+        </div>
+
+        <button type="submit" class="login-btn">🔓 Entrar</button>
+    </form>
+
+    <div class="debug-info">
+        <h3>🐛 Información de Debug (PELIGROSO)</h3>
+        <p><strong>Usuarios de prueba:</strong></p>
+        <ul>
+            <li>admin / password123 (Administrador)</li>
+            <li>user / user123 (Usuario normal)</li>
+            <li>guest / guest (Invitado)</li>
+        </ul>
+        <p><strong>Base de datos:</strong> jdbc:h2:mem:testdb</p>
+    </div>
+
+    <div class="navigation">
+        <a href="/">🏠 Volver al inicio</a>
+        <a href="/headers">📋 Ver Headers</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function executeCommand() {
+            var cmd = prompt('Ingrese comando a ejecutar:');
+            if (cmd) {
+                alert('Ejecutando: ' + cmd + '\n(Esto es una simulación de vulnerabilidad de Command Injection)');
+            }
+        }
+
+        function viewLogs() {
+            alert('Accediendo a logs del sistema...\n(Vulnerabilidad: Exposición de logs)');
+        }
+
+        function accessDatabase() {
+            alert('Conexión directa a: jdbc:h2:mem:testdb\n(Vulnerabilidad: Acceso directo a DB)');
+        }
+    </script>
+} 

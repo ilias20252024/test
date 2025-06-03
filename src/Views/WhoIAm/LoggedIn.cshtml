@@ -1,0 +1,58 @@
+@{
+    ViewData["Title"] = "Who I Am - WSP2 SecDevOps";
+}
+
+<div class="container">
+    <h1>👤 Who I Am - Sistema de Autenticación</h1>
+    <div class="warning">⚠️ VULNERABILIDADES: SQL Injection, Weak Auth, Session Issues</div>
+
+    <div class="success">
+        <h2>✅ Sesión Activa</h2>
+        <p><strong>Usuario:</strong> @ViewBag.Username</p>
+        <p><strong>Rol:</strong> @ViewBag.Role</p>
+        <p><strong>Session ID:</strong> @ViewBag.SessionId</p>
+        <p><strong>Última actividad:</strong> @ViewBag.LastActivity</p>
+        <p><strong>Tiempo máximo inactivo:</strong> @ViewBag.MaxInactiveInterval segundos</p>
+    </div>
+
+    @if (ViewBag.Role == "admin")
+    {
+        <div class="admin-panel">
+            <h3>🔧 Panel de Administración</h3>
+            <p>Acceso a funciones administrativas:</p>
+            <ul>
+                <li><a href="#" onclick="executeCommand()">Ejecutar comandos del sistema</a></li>
+                <li><a href="#" onclick="viewLogs()">Ver logs del sistema</a></li>
+                <li><a href="#" onclick="accessDatabase()">Acceso directo a base de datos</a></li>
+            </ul>
+        </div>
+    }
+
+    <form method="post" action="@Url.Action("Logout")">
+        <button type="submit" class="logout-btn">🚪 Cerrar Sesión</button>
+    </form>
+
+    <div class="navigation">
+        <a href="/">🏠 Volver al inicio</a>
+        <a href="/headers">📋 Ver Headers</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function executeCommand() {
+            var cmd = prompt('Ingrese comando a ejecutar:');
+            if (cmd) {
+                alert('Ejecutando: ' + cmd + '\n(Esto es una simulación de vulnerabilidad de Command Injection)');
+            }
+        }
+
+        function viewLogs() {
+            alert('Accediendo a logs del sistema...\n(Vulnerabilidad: Exposición de logs)');
+        }
+
+        function accessDatabase() {
+            alert('Conexión directa a: jdbc:h2:mem:testdb\n(Vulnerabilidad: Acceso directo a DB)');
+        }
+    </script>
+} 

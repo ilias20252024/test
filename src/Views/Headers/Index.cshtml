@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Headers Information - WSP2 SecDevOps";
+}
+
+<div class="container">
+    <h1>🔍 Headers HTTP Information</h1>
+    <div class="warning">⚠️ VULNERABILIDAD: Exposición de información sensible</div>
+
+    <h2>Headers recibidos:</h2>
+    <table class="headers-table">
+        <tr>
+            <th>Header</th>
+            <th>Valor</th>
+        </tr>
+        @foreach (var header in ViewBag.Headers)
+        {
+            <tr>
+                <td>@header.Key</td>
+                <td>@header.Value</td>
+            </tr>
+        }
+    </table>
+
+    <h2>Información del servidor:</h2>
+    <p><strong>Server Info:</strong> @ViewBag.ServerInfo</p>
+    <p><strong>Remote Address:</strong> @ViewBag.RemoteAddress</p>
+    <p><strong>Remote Host:</strong> @ViewBag.RemoteHost</p>
+    <p><strong>User Agent:</strong> @ViewBag.UserAgent</p>
+
+    <h2>Variables de Sistema (PELIGROSO):</h2>
+    <p><strong>Java Version:</strong> @ViewBag.JavaVersion</p>
+    <p><strong>OS Name:</strong> @ViewBag.OSName</p>
+    <p><strong>User Home:</strong> @ViewBag.UserHome</p>
+
+    <div class="navigation">
+        <a href="/">🏠 Volver al inicio</a>
+        <a href="/whoiam">👤 Who I Am</a>
+    </div>
+</div> 
